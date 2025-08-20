@@ -35,7 +35,7 @@ const About = () => {
                     </div>
 
                 </div>
-                <p className='my-10 max-w-lg'>Lorem Ipsum is simply dummy text of the printing and typesetting industry, Lorem, ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallary of type and scrambled it to make atype specimen book</p>
+                <p className='my-10 max-w-lg'>With over a decade of excellence in the real estate sector, we have been shaping skylines and building dreams across India. Our commitment lies in delivering quality spaces that combine modern design, premium amenities, and sustainable living.</p>
                 <button className='bg-blue-600 text-white px-8 py-2 rounded'>Learn more</button>
 
             </div>
