@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-// Fix for default marker icons in Leaflet
+// Fix for default marker icons in react-leaflet
 const DefaultIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
@@ -16,30 +16,46 @@ const DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const PropertyMap = ({ properties, center = [20.5937, 78.9629], zoom = 5 }) => {
-  // Default center is set to India
+const PropertyMap = ({ projects }) => {
+  const mapRef = useRef(null);
+  const defaultCenter = [20.5937, 78.9629]; // Center of India
+  const zoom = 5;
+
+  useEffect(() => {
+    if (mapRef.current && projects?.length > 0) {
+      const map = mapRef.current;
+      const bounds = L.latLngBounds(
+        projects.map(project => project.coordinates)
+      );
+      map.flyToBounds(bounds, { padding: [50, 50] });
+    }
+  }, [projects]);
+
   return (
     <div className="map-container" style={{ height: '500px', width: '100%', margin: '20px 0', borderRadius: '8px', overflow: 'hidden' }}>
-      <MapContainer 
-        center={center} 
-        zoom={zoom} 
+      <MapContainer
+        center={defaultCenter}
+        zoom={zoom}
         style={{ height: '100%', width: '100%' }}
+        ref={mapRef}
+        zoomControl={false}
         scrollWheelZoom={false}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {properties && properties.map((property, index) => (
-          <Marker 
-            key={index} 
-            position={property.coordinates || [20.5937, 78.9629]}
+        {projects?.map((project, index) => (
+          <Marker
+            key={index}
+            position={project.coordinates}
+            icon={DefaultIcon}
           >
             <Popup>
-              <div>
-                <h4>{property.title}</h4>
-                <p>{property.location}</p>
-                <p><strong>{property.price}</strong></p>
+              <div className="p-2">
+                <h3 className="font-semibold">{project.title}</h3>
+                <p className="text-sm text-gray-600">{project.location}</p>
+                <p className="text-sm font-medium text-blue-600">{project.price}</p>
               </div>
             </Popup>
           </Marker>

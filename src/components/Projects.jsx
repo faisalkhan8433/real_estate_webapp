@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { assets, projectsData } from '../assets/assets';
 import PropertyMap from './PropertyMap';
 import { toast } from 'sonner';
+import SearchFilters from './SearchFilters';
 
 // Update the projects data to include more details
 const projectsWithCoordinates = [
@@ -53,17 +54,17 @@ const projectsWithCoordinates = [
   },
   {
     image: projectsData[3].image,
-    title: 'Serene Beachfront Bungalow',
+    title: 'Royal Greens',
     price: projectsData[3].price,
-    location: 'Anjuna, Goa',
-    coordinates: [15.5845, 73.7399],
+    location: 'Gomti Nagar, Lucknow',
+    coordinates: [26.8467, 80.9462],
     details: {
       bedrooms: 4,
       bathrooms: 3,
       area: '3000 sq.ft',
       yearBuilt: 2018,
-      amenities: ['Private Beach', 'Swimming Pool', 'Garden', 'Gym', 'Home Theater'],
-      description: 'Charming beachfront bungalow with serene surroundings and stunning ocean views. Perfect for families or groups of friends looking for a relaxing getaway.'
+      amenities: ['Swimming Pool', 'Gym', '24/7 Security', 'Power Backup', 'Parking', 'Club House'],
+      description: 'Luxurious residential property in the heart of Gomti Nagar, offering premium amenities and excellent connectivity to key areas of Lucknow.'
     }
   },
   {
@@ -80,14 +81,31 @@ const projectsWithCoordinates = [
       amenities: ['Swimming Pool', 'Garden', 'Gym', 'Home Theater', 'Laundry'],
       description: 'Historic haveli turned boutique hotel, offering a unique blend of traditional charm and modern comforts. Located in the heart of Jaipur, close to major attractions.'
     }
+  },
+  {
+    image: projectsData[5].image,
+    title: 'Opal Residency',
+    price: projectsData[5].price,
+    location: 'Sector 128, Noida',
+    coordinates: [28.5355, 77.3910],
+    details: {
+      bedrooms: 3,
+      bathrooms: 3,
+      area: '2800 sq.ft',
+      yearBuilt: 2020,
+      amenities: ['Swimming Pool', 'Gym', '24/7 Security', 'Power Backup', 'Parking', 'Club House', 'Jogging Track'],
+      description: 'Premium residential property in the heart of Noida\'s IT hub, offering modern amenities and excellent connectivity to Delhi NCR. Perfect for professionals and families alike.'
+    }
   }
 ];
 
 const Projects = () => {
   const [activeTab, setActiveTab] = useState('list');
+  const [filteredProjects, setFilteredProjects] = useState(projectsWithCoordinates);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [currentProperty, setCurrentProperty] = useState(null);
+  const [filters, setFilters] = useState({});
 
   const handlePropertyClick = (property) => {
     setSelectedProperty(property);
@@ -130,6 +148,41 @@ const Projects = () => {
     }
   };
 
+  // Update filtered projects when filters change
+  useEffect(() => {
+    let result = [...projectsWithCoordinates];
+    
+    if (filters.propertyType && filters.propertyType !== 'All') {
+      result = result.filter(project => 
+        project.title.toLowerCase().includes(filters.propertyType.toLowerCase())
+      );
+    }
+    
+    if (filters.minPrice) {
+      result = result.filter(project => 
+        parseFloat(project.price.replace(/[^0-9.]/g, '')) >= parseFloat(filters.minPrice)
+      );
+    }
+    
+    if (filters.maxPrice) {
+      result = result.filter(project => 
+        parseFloat(project.price.replace(/[^0-9.]/g, '')) <= parseFloat(filters.maxPrice)
+      );
+    }
+    
+    if (filters.bedrooms) {
+      result = result.filter(project => 
+        project.details?.bedrooms >= parseInt(filters.bedrooms)
+      );
+    }
+    
+    setFilteredProjects(result);
+  }, [filters]);
+
+  const handleFilter = (newFilters) => {
+    setFilters(newFilters);
+  };
+
   return (
     <section id="projects" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -141,6 +194,8 @@ const Projects = () => {
         >
           Featured Properties
         </motion.h2>
+        
+        <SearchFilters onFilter={handleFilter} />
         
         <div className="flex justify-center mb-8">
           <div className="inline-flex rounded-md shadow-sm">
@@ -169,7 +224,7 @@ const Projects = () => {
 
         {activeTab === 'list' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projectsWithCoordinates.map((project, index) => (
+            {filteredProjects.map((project, index) => (
               <motion.div
                 key={index}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
@@ -209,19 +264,8 @@ const Projects = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-lg p-4">
-            <PropertyMap 
-              properties={projectsWithCoordinates} 
-              center={selectedProperty ? selectedProperty.coordinates : [20.5937, 78.9629]}
-              zoom={selectedProperty ? 12 : 5}
-            />
-            {selectedProperty && (
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                <h3 className="text-xl font-semibold">{selectedProperty.title}</h3>
-                <p className="text-gray-600">{selectedProperty.location}</p>
-                <p className="text-blue-600 font-bold">{selectedProperty.price}</p>
-              </div>
-            )}
+          <div className="h-[600px] rounded-lg overflow-hidden">
+            <PropertyMap projects={filteredProjects} selectedProperty={selectedProperty} />
           </div>
         )}
       </div>

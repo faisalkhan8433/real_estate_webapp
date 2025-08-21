@@ -36,42 +36,41 @@ export const assets = {
 export const projectsData = [
   {
     title: "Lotus Residency",
-    price: "₹2,05,00,000",
+    price: "₹1,20,00,000",
     location: "Delhi",
     image: project_img_1
   },
   {
     title: "Pearl Enclave",
-    price: "₹2,05,00,000",
+    price: "₹2,00,00,000",
     location: "Mumbai",
     image: project_img_2
   },
   {
     title: "Ganga Heights",
-    price: "₹2,05,00,000",
-    location: "Pune",
+    price: "₹2,85,00,000",
+    location: "Bengalore",
     image: project_img_3
   },
   {
     title: "Royal Greens",
-    price: "₹2,05,00,000",
-    location: "Bangalore",
+    price: "₹60,00,000",
+    location: "Gomti Nagar, Lucknow",
     image: project_img_4
   },
   {
     title: "Sunrise Towers",
-    price: "₹2,05,00,000",
-    location: "Delhi",
+    price: "₹3,85,00,000",
+    location: "Jaipur",
     image: project_img_5
   },
   {
-    title: "Emerald Residency",
-    price: "₹2,05,00,000",
-    location: "Mumbai",
+    title: "Opal Residency",
+    price: "₹2,75,00,000",
+    location: "Sector 128, Noida",
     image: project_img_6
   },
 ];
-
 
 export const testimonialsData = [
   {
