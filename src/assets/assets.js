@@ -73,29 +73,29 @@ export const projectsData = [
 ];
 
 
-  export const testimonialsData = [
-    {
-        name: "Donald Jackman",
-        title: "Marketing Manager",
-        image: profile_img_1,
-        alt: "Portrait of Donald Jackman",
-        rating: 5,
-        text: "From the very first meeting, they understood my vision and helped me find the perfect property. Their attention to detail and commitment to client satisfaction is unmatched."
-    },
-    {
-        name: "Richard Nelson",
-        title: "UI/UX Designer",
-        image: profile_img_2,
-        alt: "Portrait of Richard Nelson",
-        rating: 4,
-        text: "From the very first meeting, they understood my vision and helped me find the perfect property. Their attention to detail and commitment to client satisfaction is unmatched."
-    },
-    {
-        name: "James Washington",
-        title: "Co-Founder",
-        image: profile_img_3,
-        alt: "Portrait of James Washington",
-        rating: 5,
-        text: "From the very first meeting, they understood my vision and helped me find the perfect property. Their attention to detail and commitment to client satisfaction is unmatched."
-    }
+export const testimonialsData = [
+  {
+    name: "Amit Verma",
+    title: "Business Consultant",
+    image: profile_img_1,
+    alt: "Portrait of Amit Verma",
+    rating: 5,
+    text: "From the very first interaction, they understood my requirements and guided me towards the best property options. Their professionalism and dedication are truly commendable."
+  },
+  {
+    name: "Rohit Sharma",
+    title: "Software Engineer",
+    image: profile_img_2,
+    alt: "Portrait of Rohit Sharma",
+    rating: 4,
+    text: "They provided me with excellent choices in prime locations. The team made the entire home-buying process smooth and stress-free. I highly recommend them."
+  },
+  {
+    name: "Rohan Mehta",
+    title: "Startup Founder",
+    image: profile_img_3,
+    alt: "Portrait of Rohan Mehta",
+    rating: 5,
+    text: "Their expertise in real estate is remarkable. I was able to find my dream home in Bangalore, and the whole process was handled with utmost transparency."
+  }
 ];

@@ -103,6 +103,25 @@ const Projects = () => {
     setShowDetails(false);
   };
 
+  const handleAddToFavorites = (property, e) => {
+    e.stopPropagation();
+    const favorites = JSON.parse(localStorage.getItem('favoriteProperties')) || [];
+    
+    // Check if property is already in favorites
+    const isAlreadyFavorite = favorites.some(fav => fav.id === property.id);
+    
+    if (!isAlreadyFavorite) {
+      const propertyWithId = { ...property, id: `${property.title.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}` };
+      const updatedFavorites = [...favorites, propertyWithId];
+      localStorage.setItem('favoriteProperties', JSON.stringify(updatedFavorites));
+      
+      // Show success message or animation
+      alert('Added to favorites!');
+    } else {
+      alert('This property is already in your favorites!');
+    }
+  };
+
   return (
     <section id="projects" className="min-h-screen py-12 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -145,17 +164,28 @@ const Projects = () => {
             {projectsWithCoordinates.map((project, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 onClick={() => handlePropertyClick(project)}
               >
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-48 object-cover"
-                />
+                <div className="relative">
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-48 object-cover"
+                  />
+                  <button
+                    onClick={(e) => handleAddToFavorites(project, e)}
+                    className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
+                    aria-label="Add to favorites"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </button>
+                </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                   <p className="text-gray-600 mb-2">{project.location}</p>
