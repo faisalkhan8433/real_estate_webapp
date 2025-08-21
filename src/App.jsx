@@ -5,6 +5,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
+import FAQ from './components/FAQ';
 import Favorites from './components/Favorites';
 import Navbar from './components/Navbar';
 import { ToastContainer } from 'react-toastify';
@@ -17,6 +18,7 @@ const Home = () => (
     <About />
     <Projects />
     <Testimonials />
+    <FAQ />
     <Contact />
   </>
 );
