@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { assets, projectsData } from '../assets/assets';
 import PropertyMap from './PropertyMap';
+import { toast } from 'sonner';
 
 // Update the projects data to include more details
 const projectsWithCoordinates = [
@@ -115,10 +116,17 @@ const Projects = () => {
       const updatedFavorites = [...favorites, propertyWithId];
       localStorage.setItem('favoriteProperties', JSON.stringify(updatedFavorites));
       
-      // Show success message or animation
-      alert('Added to favorites!');
+      // Show success toast
+      toast.success('Property added to favorites!', {
+        duration: 3000,
+        position: 'top-center',
+      });
     } else {
-      alert('This property is already in your favorites!');
+      // Show info toast if already in favorites
+      toast.info('This property is already in your favorites!', {
+        duration: 3000,
+        position: 'top-center',
+      });
     }
   };
 
